@@ -150,31 +150,57 @@ Sift now governs actions deterministically not intentions through cryptographic 
 Deployment Architecture
 
 Sift is deployed as a fully cloud-native service on AWS.
-Infrastructure Stack
-Amazon ECS (Fargate) — container orchestration
-Application Load Balancer (ALB) — public ingress layer
-Target Group (IP mode) — Fargate-compatible routing
-AWS ECR — container image registry
-CloudWatch Logs — centralized logging
-VPC + Security Groups — least-privilege network isolation
-Runtime Configuration
-FastAPI application containerized via Docker
-Uvicorn running on 0.0.0.0:8080
-Health check endpoint: /healthz
-ALB listener: HTTP :80
-Target group forwards to container port 8080
-ECS service registers tasks dynamically via awsvpc networking
+
+  Infrastructure Stack
+
+  Amazon ECS (Fargate) — container orchestration
+
+  Application Load Balancer (ALB) — public ingress layer
+
+  Target Group (IP mode) — Fargate-compatible routing
+ 
+  AWS ECR — container image registry
+  
+  CloudWatch Logs — centralized logging
+  
+  VPC + Security Groups — least-privilege network isolation
+  
+  Runtime Configuration
+  
+  FastAPI application containerized via Docker
+  
+  Uvicorn running on 0.0.0.0:8080
+  
+  Health check endpoint: /healthz
+  
+  ALB listener: HTTP :80
+  
+  Target group forwards to container port 8080
+  
+  ECS service registers tasks dynamically via awsvpc networking
+
 Network Security Model
-ALB security group:
-Inbound: TCP 80 from 0.0.0.0/0
+
+  ALB security group:
+
+  Inbound: TCP 80 from 0.0.0.0/0
+
 Service security group:
-Inbound: TCP 8080 from ALB security group only
-No direct public access to tasks
+
+  Inbound: TCP 8080 from ALB security group only
+
+  No direct public access to tasks
 
 Traffic flows:
-Client → ALB → Target Group → Fargate Task
-Deployment Properties
-Rolling deployments enabled
-Circuit breaker enabled
-Health-check-based registration/deregistration
-Fail-closed behavior enforced at application layer
+
+  Client → ALB → Target Group → Fargate Task
+
+  Deployment Properties
+
+  Rolling deployments enabled
+
+  Circuit breaker enabled
+
+  Health-check-based registration/deregistration
+
+  Fail-closed behavior enforced at application layer
