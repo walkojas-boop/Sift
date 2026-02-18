@@ -132,22 +132,6 @@ Versioned, hashed governance layer
 High-fidelity structured telemetry
 
 Alpha Status
-The Sift Alpha Gateway has reached Operational Stability under single-node deployment conditions.
-It is hardened against
-Replay attacks
-Stale/future timestamp attacks
-Privilege escalation
-Parameter injection
-Resource exhaustion
-Key compromise
-Manifest tampering
-Known Future Scaling Considerations
-Centralized replay store for horizontal scaling
-Distributed identity cache
-Formalized key rotation workflows
-External audit preparation
-Sift now governs actions deterministically not intentions through cryptographic identity anchoring and policy-bound execution routing.
-Deployment Architecture
 
 Sift is deployed as a fully cloud-native service on AWS.
 
