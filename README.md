@@ -1,190 +1,79 @@
 # Sift
 
-https://sift.walkosystems.com
+**The governance layer between AI agents and the real world.**
 
-Sift is an agent execution routing and governance layer.
+Autonomous agents are executing code, calling APIs, sending emails, moving data. Most frameworks ship with zero governance. The agent decides, the action happens, you find out later.
 
-It sits between agent intent and tool/model execution.
+Sift sits between every tool call and execution. It checks policy, issues a cryptographic receipt, and returns ALLOW or BLOCK. Hard block means nothing runs. Fail-closed means if Sift is unreachable, nothing runs either. One kill switch stops all agents cold.
 
-Core functions:
+## Why This Matters
 
-• Policy gating before execution  
-• Tool permission enforcement  
-• Latency / cost / certainty routing  
-• Retry + fallback orchestration  
-• Signed telemetry + audit receipts  
+DeerFlow, AutoGPT, LangGraph. Powerful frameworks. Zero governance layer. Your agent can write to prod, call external services, send emails at scale, and there is no checkpoint between "decided" and "done."
 
-Sift exposes an intake handshake endpoint for agent onboarding and routing validation.
+Sift is that checkpoint.
 
----
+## Architecture
 
-## Intake Harness
+```
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚                         JASON WALKO                             â”‚
+â”‚                  â—† Human Â· Kill Switch Authority â—†              â”‚
+â”‚            Override Â· Policy Owner Â· Final Arbiter              â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+                            â”‚  command & control
+          â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+          â”‚                 â”‚                 â”‚
+          â–¼                 â–¼                 â–¼
+  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â” â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â” â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+  â”‚     ASTRA     â”‚ â”‚    GERALT     â”‚ â”‚    BREACH     â”‚
+  â”‚   Operator    â”‚ â”‚    Auditor    â”‚ â”‚  Red-Teamer   â”‚
+  â”‚               â”‚ â”‚               â”‚ â”‚               â”‚
+  â”‚ Executes work â”‚ â”‚ Reviews logs  â”‚ â”‚ Finds gaps in â”‚
+  â”‚ Requests      â”‚ â”‚ Patches rules â”‚ â”‚ policy &      â”‚
+  â”‚ real-world    â”‚ â”‚ Validates     â”‚ â”‚ governance    â”‚
+  â”‚ actions       â”‚ â”‚ compliance    â”‚ â”‚ coverage      â”‚
+  â””â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”˜ â””â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”˜ â””â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”˜
+          â”‚                 â”‚                 â”‚
+          â”‚  action request â”‚â—„â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+          â”‚                 â”‚   nightly improvement loop
+          â–¼                 â”‚   Breach finds gap â†’
+  â•”â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•— â”‚   Geralt patches â†’
+  â•‘   SIFT GOVERNANCE     â•‘â—„â”˜   Astra improves
+  â•‘       LAYER           â•‘
+  â•‘                       â•‘
+  â•‘  1. Policy check      â•‘
+  â•‘  2. Sign receipt      â•‘
+  â•‘  3. ALLOW or BLOCK    â•‘
+  â•šâ•â•â•â•â•â•â•â•â•â•â•¤â•â•â•â•â•â•â•â•â•â•â•â•â•
+             â”‚
+     â”Œâ”€â”€â”€â”€â”€â”€â”€â”´â”€â”€â”€â”€â”€â”€â”€â”€â”
+     â”‚                â”‚
+     â–¼                â–¼
+  âœ… ALLOW         âŒ BLOCK
+  Signed receipt   Hard stop
+  issued           No execution
+     â”‚
+     â–¼
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚                        REAL WORLD                               â”‚
+â”‚                                                                 â”‚
+â”‚   [ APIs ]         [ Files ]        [ External Services ]       â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+```
 
-POST /request
+## Core Properties
 
-Agent handshake supported.
+- **Fail-closed**: Sift unreachable means nothing executes
+- **Cryptographic receipts**: every ALLOW is signed with Ed25519
+- **Hard blocks**: DENY means no execution, full stop
+- **Kill switch**: one call halts all agent action instantly
+- **Policy-driven**: your rules, not framework defaults
+- **Audit trail**: every decision logged and signed
 
-Returns:
+## Status
 
-• Routing decision trace  
-• Selected bridge/tool  
-• Fallback + retry log  
-• Signed telemetry receipt  
+Live. Running on AWS. Alpha access available.
 
----
+## Contact
 
-## Test Harness
-
-Example execution payload:
-
-"Translate this sentence to Spanish: We are ready for alpha validation."
-
-Used to validate:
-
-• Intent resolution  
-• Bridge selection  
-• Governance enforcement  
-• Telemetry emission  
-
----
-
-Looking to connect with builders working on:
-
-• Agent infrastructure  
-• Tool permissioning  
-• Policy enforcement  
-• Execution routing  
-• Telemetry + auditability
-
-Sift Alpha Gateway — Security & Governance Validation Summary
-Overview
-
-The Sift Alpha Gateway has completed a full adversarial validation cycle across execution, identity, governance, and control-plane layers. The system now operates as a deterministic, fail-closed execution governor — not a permissive router.
-
-All tests were conducted under mock and live alpha conditions.
-
-Security Layers Validated
-1. Temporal Gating
-Blocks stale requests (>300s old)
-Blocks future-dated requests (>5s ahead)
-Fail-closed on clock or validation failure
-Fully logged with structured telemetry
-
-2. Replay Protection
-Atomic replay cache (120s TTL)
-Verified under concurrent burst (20 simultaneous identical requests)
-Result: 1 permit / 19 deterministic denials
-Fail-closed on cache failure
-
-3. Scope & Risk Enforcement
-Agent → action → tool ACL binding
-Max risk-tier enforcement per agent
-Unauthorized tool access blocked pre-routing
-No routing engine side-effects during denial
-
-4. Parameter Integrity
-Strict tool manifest parameter whitelisting
-Injection attempts rejected (422 schema violations)
-No capability override via param pollution
-
-5. Governance Saturation Resilience
-Sustained denial flood (~50 req/sec)
-100% malicious rejection accuracy
-100% valid request success
-No fail-open behavior
-No telemetry drops
-
-6. Cryptographic Identity Model (ED25519)
-Public-key based identity (no shared secrets)
-Challenge → Sign → Verify handshake
-Full envelope binding:
-request_id
-tenant_id
-agent_id
-action
-tool
-risk_tier
-nonce
-timestamp
-params_hash
-Any payload mutation invalidates signature
-
-7. Instant Revocation (Kill-Switch)
-Agent revocation effective immediately
-No restart dependency
-Old receipts invalidated
-Clear telemetry separation:
-identity_denied
-receipt_denied_revoked
-
-8. Control Plane Integrity
-policy_hash + policy_version attached to each decision
-Manifest change detection with integrity alerts
-Boot-time audit of active security thresholds
-Security thresholds exposed via /metrics
-No silent privilege drift
-Architectural Properties Achieved
-Deterministic policy enforcement
-Strict fail-closed behavior
-Cryptographically anchored identity
-Air-gapped routing (no execution on denial)
-Versioned, hashed governance layer
-High-fidelity structured telemetry
-
-Alpha Status
-
-Sift is deployed as a fully cloud-native service on AWS.
-
-  Infrastructure Stack
-
-  Amazon ECS (Fargate) — container orchestration
-
-  Application Load Balancer (ALB) — public ingress layer
-
-  Target Group (IP mode) — Fargate-compatible routing
- 
-  AWS ECR — container image registry
-  
-  CloudWatch Logs — centralized logging
-  
-  VPC + Security Groups — least-privilege network isolation
-  
-  Runtime Configuration
-  
-  FastAPI application containerized via Docker
-  
-  Uvicorn running on 0.0.0.0:8080
-  
-  Health check endpoint: /healthz
-  
-  ALB listener: HTTP :80
-  
-  Target group forwards to container port 8080
-  
-  ECS service registers tasks dynamically via awsvpc networking
-
-Network Security Model
-
-  ALB security group:
-
-  Inbound: TCP 80 from 0.0.0.0/0
-
-Service security group:
-
-  Inbound: TCP 8080 from ALB security group only
-
-  No direct public access to tasks
-
-Traffic flows:
-
-  Client → ALB → Target Group → Fargate Task
-
-  Deployment Properties
-
-  Rolling deployments enabled
-
-  Circuit breaker enabled
-
-  Health-check-based registration/deregistration
-
-  Fail-closed behavior enforced at application layer
+jason@walkosystems.com
