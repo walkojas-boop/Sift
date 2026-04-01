@@ -22,23 +22,23 @@ The most capable AI isn't the most deployable AI. The most trustworthy AI is. Ca
   Agent action request
           |
           v
-  +=======================+
-  ||  SIFT GOVERNANCE    ||
-  ||      LAYER          ||
-  ||                     ||
-  ||  1. Policy check    ||
-  ||  2. Sign receipt    ||
-  ||  3. ALLOW or BLOCK  ||
-  +==========+=============+
-             |
-     +-------+--------+
-     |                 |
-     v                 v
-  ALLOW             BLOCK
-  Signed receipt    Hard stop
-  issued            No execution
-     |
-     v
+  +======================+
+  ||  SIFT GOVERNANCE  ||
+  ||      LAYER        ||
+  ||                   ||
+  ||  1. Policy check  ||
+  ||  2. Sign receipt  ||
+  ||  3. ALLOW or BLOCK||
+  +=========+===========+
+            |
+       +----+--------+
+       |             |
+       v             v
+    ALLOW          BLOCK
+  Signed receipt   Hard stop
+  issued           No execution
+       |
+       v
   Real world execution
   (APIs, files, external services)
 ```
@@ -59,16 +59,6 @@ Most agent safety is probabilistic — system prompts, guidelines, asking the ag
 
 Sift is deterministic. The policy layer enforces at runtime. The agent cannot bypass it. That is the difference between hoping it stays in bounds and knowing it does.
 
-## Pricing
-
-| Tier | Price | Best for |
-|------|-------|----------|
-| Skill | $29/month | Developers, indie builders |
-| Plugin | $100/month | Teams, production deployments |
-| Enterprise | Custom | Regulated industries, full infrastructure |
-
-Get started: https://buy.stripe.com/cNi3cw7TZ9tianudbKgbm01
-
 ## Status
 
 Live. Running on AWS. Real tenants. Real receipts.
@@ -76,4 +66,4 @@ Live. Running on AWS. Real tenants. Real receipts.
 ## Contact
 
 jason@walkosystems.com
-sift.walkosystems.com
+[sift.walkosystems.com](https://sift.walkosystems.com)
