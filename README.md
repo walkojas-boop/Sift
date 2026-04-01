@@ -16,31 +16,14 @@ Sift is that checkpoint.
 
 The most capable AI isn't the most deployable AI. The most trustworthy AI is. Capability without governance is liability that hasn't materialized yet.
 
-## Architecture
+## How It Works
 
 ```
-+-----------------------------------------------------------------+
-|                         HUMAN IN THE LOOP                       |
-|              * Kill Switch Authority *                          |
-|          Override - Policy Owner - Final Arbiter                |
-+---------------------------+-------------------------------------+
-                            |  command & control
-          +-----------------+-----------------+
-          |                 |                 |
-          v                 v                 v
-  +---------------+ +---------------+ +---------------+
-  |    OPERATOR   | |    AUDITOR    | |  RED-TEAMER   |
-  |               | |               | |               |
-  | Executes work | | Reviews logs  | | Finds gaps in |
-  | Requests      | | Patches rules | | policy &      |
-  | real-world    | | Validates     | | governance    |
-  | actions       | | compliance    | | coverage      |
-  +-------+-------+ +-------+-------+ +-------+-------+
-          |                 |                 |
-          |  action request |<----------------+
-          v                 |
-  +=======================+ |
-  ||  SIFT GOVERNANCE    ||<+
+  Agent action request
+          |
+          v
+  +=======================+
+  ||  SIFT GOVERNANCE    ||
   ||      LAYER          ||
   ||                     ||
   ||  1. Policy check    ||
@@ -56,11 +39,8 @@ The most capable AI isn't the most deployable AI. The most trustworthy AI is. Ca
   issued            No execution
      |
      v
-+-----------------------------------------------------------------+
-|                        REAL WORLD                               |
-|                                                                 |
-|   [ APIs ]         [ Files ]        [ External Services ]       |
-+-----------------------------------------------------------------+
+  Real world execution
+  (APIs, files, external services)
 ```
 
 ## Core Properties
@@ -83,11 +63,11 @@ Sift is deterministic. The policy layer enforces at runtime. The agent cannot by
 
 | Tier | Price | Best for |
 |------|-------|----------|
-| **Skill** | $29/month | Developers, indie builders, OpenClaw users |
-| **Plugin** | $100/month | Teams, production deployments |
-| **Enterprise** | Custom | Regulated industries, full infrastructure |
+| Skill | $29/month | Developers, indie builders |
+| Plugin | $100/month | Teams, production deployments |
+| Enterprise | Custom | Regulated industries, full infrastructure |
 
-→ [Get started](https://buy.stripe.com/cNi3cw7TZ9tianudbKgbm01)
+Get started: https://buy.stripe.com/cNi3cw7TZ9tianudbKgbm01
 
 ## Status
 
@@ -95,4 +75,5 @@ Live. Running on AWS. Real tenants. Real receipts.
 
 ## Contact
 
-jason@walkosystems.com | [sift.walkosystems.com](https://sift.walkosystems.com)
+jason@walkosystems.com
+sift.walkosystems.com
