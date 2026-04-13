@@ -67,3 +67,14 @@ Live. Running on AWS. Real tenants. Real receipts.
 
 jason@walkosystems.com
 [sift.walkosystems.com](https://sift.walkosystems.com)
+
+
+## Agent Discovery Protocol
+
+Sift is part of a 14-service agent infrastructure stack, all discoverable via one endpoint:
+
+```
+GET https://walkosystems.com/.well-known/agent-discovery.json
+```
+
+See the [Agent Discovery Protocol spec](https://github.com/walkojas-boop/agent-discovery-protocol) for details.
